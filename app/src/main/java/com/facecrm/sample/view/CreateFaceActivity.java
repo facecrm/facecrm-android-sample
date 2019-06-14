@@ -11,15 +11,15 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.face.detect.FaceCRM;
-import com.face.detect.Listener.DetectFaceListener;
-import com.face.detect.Listener.UploadFaceListener;
-import com.face.detect.Model.APUpload;
-import com.face.detect.Util.Util;
-import com.facecrm.sample.R;
 import com.bumptech.glide.Glide;
+import com.face.detect.FaceCRMSDK;
+import com.face.detect.Listener.CaptureFaceListener;
+import com.face.detect.Listener.RegisterFaceListener;
+import com.facecrm.sample.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +28,7 @@ public class CreateFaceActivity extends AppCompatActivity implements View.OnClic
 
     private ProgressDialog progressDialog;
 
-    private String encodeImage_1, encodeImage_2, encodeImage_3, encodeImage_4;
+    private Bitmap bitmapFace_1, bitmapFace_2, bitmapFace_3, bitmapFace_4;
 
     @BindView(R.id.btn_next)
     AppCompatButton btnNext;
@@ -56,7 +56,8 @@ public class CreateFaceActivity extends AppCompatActivity implements View.OnClic
     ImageView imvAdd;
 
     private Bitmap mBitmap;
-    private String clientId = "";
+    private int numberFace = 0;
+    private List<Bitmap> lstFace = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,19 +82,38 @@ public class CreateFaceActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onResume() {
         super.onResume();
-        FaceCRM.getsInstance().startCamera(CreateFaceActivity.this,
-                R.id.color_blob_detection_activity_surface_view, false);
+        FaceCRMSDK.getsInstance().startRegisterByCamera(CreateFaceActivity.this,
+                R.id.color_blob_detection_activity_surface_view);
 
-        FaceCRM.getsInstance().setDetectFaceListener(new DetectFaceListener() {
+        FaceCRMSDK.getsInstance().captureFace(new CaptureFaceListener() {
             @Override
-            public void onDetectSuccess(Bitmap imgFull, Bitmap imgFace) {
-                Log.e("onDetectSuccess", imgFace + "");
-                mBitmap = imgFace;
+            public void onCaptureFace(Bitmap face, Bitmap fullImage) {
+                mBitmap = face;
             }
+        });
 
+        FaceCRMSDK.getsInstance().onRegisterFace(new RegisterFaceListener() {
             @Override
-            public void onDetectFail(String msgFail) {
-                Log.e("onDetectFail", msgFail);
+            public void onRegisterFace(Bitmap face, int code, String message) {
+                Log.e("onRegisterFace", code + "-" + message);
+                switch (numberFace) {
+                    case 1:
+                        registerFace(bitmapFace_2, 2);
+                        break;
+                    case 2:
+                        registerFace(bitmapFace_3, 3);
+                        break;
+                    case 3:
+                        registerFace(bitmapFace_4, 4);
+                        break;
+                    case 4:
+                        FaceCRMSDK.getsInstance().finishRegister();
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
+                        finish();
+                        break;
+                }
             }
         });
     }
@@ -101,13 +121,12 @@ public class CreateFaceActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onPause() {
         super.onPause();
-        FaceCRM.getsInstance().stopCamera();
+        FaceCRMSDK.getsInstance().stopCamera();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        FaceCRM.getsInstance().stopCamera();
     }
 
     @Override
@@ -117,106 +136,64 @@ public class CreateFaceActivity extends AppCompatActivity implements View.OnClic
                 if (mBitmap != null) {
                     if (imv1.getDrawable() == null) {
                         Glide.with(this).load(mBitmap).into(imv1);
-                        encodeImage_1 = Util.shared().convertBitmapToBase64(mBitmap);
+                        bitmapFace_1 = mBitmap;
+                        lstFace.add(bitmapFace_1);
                         mBitmap = null;
                         return;
                     }
                     if (imv2.getDrawable() == null) {
                         Glide.with(this).load(mBitmap).into(imv2);
-                        encodeImage_2 = Util.shared().convertBitmapToBase64(mBitmap);
+                        bitmapFace_2 = mBitmap;
+                        lstFace.add(bitmapFace_2);
                         mBitmap = null;
                         return;
                     }
                     if (imv3.getDrawable() == null) {
                         Glide.with(this).load(mBitmap).into(imv3);
-                        encodeImage_3 = Util.shared().convertBitmapToBase64(mBitmap);
+                        bitmapFace_3 = mBitmap;
+                        lstFace.add(bitmapFace_3);
                         mBitmap = null;
                         return;
                     }
                     if (imv4.getDrawable() == null) {
                         Glide.with(this).load(mBitmap).into(imv4);
-                        encodeImage_4 = Util.shared().convertBitmapToBase64(mBitmap);
+                        bitmapFace_4 = mBitmap;
+                        lstFace.add(bitmapFace_4);
                         mBitmap = null;
                         return;
                     }
                 }
                 break;
             case R.id.btn_next:
-                if (encodeImage_1 != null && encodeImage_2 != null &&
-                        encodeImage_3 != null && encodeImage_4 != null) {
+                if (bitmapFace_1 != null && bitmapFace_2 != null &&
+                        bitmapFace_3 != null && bitmapFace_4 != null) {
                     progressDialog = new ProgressDialog(this);
                     progressDialog.setMessage("Please waiting...");
                     progressDialog.show();
-                    //todo call api create face
-                    uploadImage(encodeImage_1, 1);
+                    registerFace(bitmapFace_1, 1);
                 }
                 break;
             case R.id.imv_close_1:
                 imv1.setImageDrawable(null);
-                encodeImage_1 = null;
+                bitmapFace_1 = null;
                 break;
             case R.id.imv_close_2:
                 imv2.setImageDrawable(null);
-                encodeImage_2 = null;
+                bitmapFace_2 = null;
                 break;
             case R.id.imv_close_3:
                 imv3.setImageDrawable(null);
-                encodeImage_3 = null;
+                bitmapFace_3 = null;
                 break;
             case R.id.imv_close_4:
                 imv4.setImageDrawable(null);
-                encodeImage_4 = null;
+                bitmapFace_4 = null;
                 break;
         }
     }
 
-    private void uploadImage(final String base64, final int numberImage) {
-        FaceCRM.getsInstance().callFaceUploadApi(base64, new UploadFaceListener() {
-            @Override
-            public void onUploadFaceSuccess(APUpload data) {
-                clientId = data.clientId;
-                switch (numberImage) {
-                    case 1:
-                        uploadImage(encodeImage_2, 2);
-                        break;
-                    case 2:
-                        uploadImage(encodeImage_3, 3);
-                        break;
-                    case 3:
-                        uploadImage(encodeImage_4, 4);
-                        break;
-                    case 4:
-                        if (progressDialog.isShowing()) {
-                            progressDialog.dismiss();
-                        }
-                        finish();
-                        break;
-                }
-            }
-
-            @Override
-            public void onUploadFaceFail(String message) {
-                if (progressDialog.isShowing()) {
-                    progressDialog.dismiss();
-                }
-                if (numberImage == 1) {
-                    imv1.setImageDrawable(null);
-                    encodeImage_1 = null;
-                }
-                if (numberImage == 2) {
-                    imv2.setImageDrawable(null);
-                    encodeImage_2 = null;
-                }
-                if (numberImage == 3) {
-                    imv1.setImageDrawable(null);
-                    encodeImage_3 = null;
-                }
-                if (numberImage == 4) {
-                    imv4.setImageDrawable(null);
-                    encodeImage_4 = null;
-                }
-                Toast.makeText(CreateFaceActivity.this, "Upload image face fail", Toast.LENGTH_SHORT).show();
-            }
-        });
+    private void registerFace(final Bitmap bitmapFace, int number) {
+        numberFace = number;
+        FaceCRMSDK.getsInstance().registerEachFace(bitmapFace);
     }
 }

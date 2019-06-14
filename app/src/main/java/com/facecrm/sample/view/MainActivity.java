@@ -12,12 +12,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.face.detect.FaceCRM;
-import com.face.detect.Listener.DetectFaceListener;
-import com.face.detect.Listener.VerifyDetectFaceListener;
-import com.face.detect.Model.APDataModel;
-import com.facecrm.sample.R;
 import com.bumptech.glide.Glide;
+import com.face.detect.FaceCRMSDK;
+import com.face.detect.Listener.DetectFaceListener;
+import com.face.detect.Listener.FoundFaceListener;
+import com.facecrm.sample.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,58 +56,35 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        FaceCRM.getsInstance().startCamera(this,
-                R.id.color_blob_detection_activity_surface_view, true);
+        FaceCRMSDK.getsInstance().startDetectByCamera(this, R.id.color_blob_detection_activity_surface_view);
 
-        FaceCRM.getsInstance().setDetectFaceListener(new DetectFaceListener() {
+        FaceCRMSDK.getsInstance().onFoundFace(new FoundFaceListener() {
             @Override
-            public void onDetectSuccess(final Bitmap imgFull, final Bitmap imgFace) {
+            public void onFoundFace(final Bitmap face, final Bitmap fullImage) {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         MainActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Glide.with(MainActivity.this).load(imgFull).into(imvFull);
-                                Glide.with(MainActivity.this).load(imgFace).into(imvFace);
+                                Glide.with(MainActivity.this).load(fullImage).into(imvFull);
+                                Glide.with(MainActivity.this).load(face).into(imvFace);
                             }
                         });
                     }
                 }).start();
             }
-
-            @Override
-            public void onDetectFail(final String msgFail) {
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        MainActivity.this.runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                imvFull.setImageResource(R.drawable.imgae_default);
-//                                imvFace.setImageResource(R.drawable.imgae_default);
-//                                tvName.setText(msgFail);
-//                            }
-//                        });
-//                    }
-//                }).start();
-            }
         });
 
-        FaceCRM.getsInstance().setVerifyDetectFaceListener(new VerifyDetectFaceListener() {
+        FaceCRMSDK.getsInstance().onDetectFace(new DetectFaceListener() {
             @Override
-            public void onVerifyFaceSuccess(APDataModel data) {
-                tvName.setText(data.getFaceId());
+            public void onDetectFaceSuccess(Bitmap face, Bitmap fullImage, String faceId, String metaData) {
+                tvName.setText(faceId);
             }
 
             @Override
-            public void onVerifyFaceFail(int code, String message) {
-                if (code == 404)
-                    tvName.setText("Face verification not found");
-                else if (code == 500)
-                    tvName.setText("Server verify face fail");
-                else
-                    tvName.setText("Detect face fail");
+            public void onDetectFaceFail(Bitmap face, Bitmap fullImage, int code, String message) {
+                tvName.setText("Error code = " + code + ", " + message);
             }
         });
 
@@ -117,13 +93,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @Override
     public void onPause() {
         super.onPause();
-        FaceCRM.getsInstance().stopCamera();
+        FaceCRMSDK.getsInstance().stopCamera();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        FaceCRM.getsInstance().stopCamera();
+        FaceCRMSDK.getsInstance().stopCamera();
     }
 
     private void initOnClick() {

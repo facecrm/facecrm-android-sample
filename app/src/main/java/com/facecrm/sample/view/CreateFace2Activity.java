@@ -15,7 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.face.detect.FaceCRM;
+import com.face.detect.FaceCRMSDK;
 import com.facecrm.sample.R;
 import com.bumptech.glide.Glide;
 
@@ -114,7 +114,7 @@ public class CreateFace2Activity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         if (v.getId() == R.id.btn_next) {
             if (mBitmap != null) {
-                FaceCRM.getsInstance().detectByImage(null, mBitmap);
+                FaceCRMSDK.getsInstance().detectByImage(null, mBitmap);
                 mBitmap = null;
             }
         }

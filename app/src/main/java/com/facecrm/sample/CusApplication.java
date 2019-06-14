@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.provider.Settings;
 import android.widget.Toast;
 
-import com.face.detect.FaceCRM;
+import com.face.detect.FaceCRMSDK;
 import com.face.detect.Util.Util;
 import com.facecrm.sample.model.MemberResult;
 import com.facecrm.sample.network.NetworkClient;
@@ -25,7 +25,7 @@ public class CusApplication extends Application {
     public void onCreate() {
         super.onCreate();
         pre = getSharedPreferences(Utils.PREF, MODE_PRIVATE);
-        FaceCRM.newInstance(getApplicationContext());
+        FaceCRMSDK.newInstance(getApplicationContext());
         getToken();
         String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         Util.shared().setDeviceId(deviceId);
