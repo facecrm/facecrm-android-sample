@@ -58,13 +58,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         HistoryResult.History user = lstData.get(position);
         viewHolder.tvCheckIn.setText(Utils.covertTime(user.created_at));
         viewHolder.tvName.setText("Type: " + user.event_type);
+        viewHolder.tvPhone.setVisibility(View.GONE);
         try {
             if (user.dataHistory.equals("{}")) {
                 viewHolder.tvEmail.setVisibility(View.GONE);
-                viewHolder.tvPhone.setVisibility(View.GONE);
             } else {
                 JSONObject object = new JSONObject(user.dataHistory);
-                Log.e("data", "data");
+                viewHolder.tvEmail.setText("Face ID: " + object.getString("face_id"));
             }
 
         } catch (JSONException e) {

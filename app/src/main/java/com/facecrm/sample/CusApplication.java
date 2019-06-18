@@ -2,11 +2,10 @@ package com.facecrm.sample;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
-import android.content.SharedPreferences;
-import android.provider.Settings;
 import android.widget.Toast;
 
 import com.face.detect.FaceCRMSDK;
+import com.face.detect.Util.OptionFaceCRM;
 import com.face.detect.Util.Util;
 import com.facecrm.sample.model.MemberResult;
 import com.facecrm.sample.network.NetworkClient;
@@ -18,17 +17,16 @@ import retrofit2.Response;
 
 public class CusApplication extends Application {
 
-    private SharedPreferences pre;
 
     @SuppressLint("HardwareIds")
     @Override
     public void onCreate() {
         super.onCreate();
-        pre = getSharedPreferences(Utils.PREF, MODE_PRIVATE);
-        FaceCRMSDK.newInstance(getApplicationContext());
-        getToken();
-        String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-        Util.shared().setDeviceId(deviceId);
+        FaceCRMSDK.newInstance(getApplicationContext(), Utils.appId);
+        OptionFaceCRM.mInstance().setBrightness(-30);
+//        getToken();
+//        String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+//        Util.shared().setDeviceId(deviceId);
     }
 
     private void getToken() {
@@ -40,9 +38,6 @@ public class CusApplication extends Application {
                         if (response.isSuccessful()) {
                             if (response.body() != null && response.body().status == 200) {
                                 Util.shared().setToken(response.body().dataMember.token);
-                                SharedPreferences.Editor editor = pre.edit();
-                                editor.putString(Utils.TOKEN, response.body().dataMember.token);
-                                editor.apply();
                             }
                         } else {
                             assert response.body() != null;

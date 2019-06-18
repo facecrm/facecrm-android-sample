@@ -151,10 +151,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="30dp"
-            android:text="Full name"
+            android:text="Meta data"
             android:textColor="@color/purple"
             android:textSize="@dimen/text_size_16"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/relativeLayout3" />
 
@@ -167,9 +167,8 @@
             android:background="@drawable/custom_shape_edittext"
             android:minWidth="250dp"
             android:padding="@dimen/margin_10"
-            android:singleLine="true"
             android:textSize="@dimen/text_size_16"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintStart_toEndOf="@+id/tv_name"

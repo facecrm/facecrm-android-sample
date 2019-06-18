@@ -11,11 +11,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.face.detect.FaceCRMSDK;
 import com.face.detect.Listener.CaptureFaceListener;
 import com.face.detect.Listener.RegisterFaceListener;
+import com.face.detect.Listener.UploadFaceListener;
 import com.facecrm.sample.R;
 
 import java.util.ArrayList;
@@ -92,30 +94,35 @@ public class CreateFaceActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-        FaceCRMSDK.getsInstance().onRegisterFace(new RegisterFaceListener() {
+        FaceCRMSDK.getsInstance().onUploadFace(new UploadFaceListener() {
             @Override
-            public void onRegisterFace(Bitmap face, int code, String message) {
-                Log.e("onRegisterFace", code + "-" + message);
-                switch (numberFace) {
-                    case 1:
-                        registerFace(bitmapFace_2, 2);
-                        break;
-                    case 2:
-                        registerFace(bitmapFace_3, 3);
-                        break;
-                    case 3:
-                        registerFace(bitmapFace_4, 4);
-                        break;
-                    case 4:
-                        FaceCRMSDK.getsInstance().finishRegister();
-                        if (progressDialog.isShowing()) {
-                            progressDialog.dismiss();
-                        }
-                        finish();
-                        break;
-                }
+            public void onUploadFace(Bitmap bitmap, int code, String message) {
+                Log.e("onUploadFace", code + "-" + message);
             }
         });
+
+        FaceCRMSDK.getsInstance().onRegisterFace(new RegisterFaceListener() {
+            @Override
+            public void onRegisterFaceSuccess(int i, String message, String faceId) {
+                Toast.makeText(CreateFaceActivity.this, message, Toast.LENGTH_SHORT).show();
+                dismissDialog();
+            }
+
+            @Override
+            public void onRegisterFaceFail(int i, String s) {
+                Toast.makeText(CreateFaceActivity.this, s, Toast.LENGTH_SHORT).show();
+                dismissDialog();
+            }
+
+        });
+    }
+
+    private void dismissDialog() {
+        FaceCRMSDK.getsInstance().finishRegister();
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+        finish();
     }
 
     @Override
@@ -170,7 +177,7 @@ public class CreateFaceActivity extends AppCompatActivity implements View.OnClic
                     progressDialog = new ProgressDialog(this);
                     progressDialog.setMessage("Please waiting...");
                     progressDialog.show();
-                    registerFace(bitmapFace_1, 1);
+                    registerFace();
                 }
                 break;
             case R.id.imv_close_1:
@@ -192,8 +199,7 @@ public class CreateFaceActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    private void registerFace(final Bitmap bitmapFace, int number) {
-        numberFace = number;
-        FaceCRMSDK.getsInstance().registerEachFace(bitmapFace);
+    private void registerFace() {
+        FaceCRMSDK.getsInstance().registerOneByOneFace(lstFace, edtName.getText().toString());
     }
 }

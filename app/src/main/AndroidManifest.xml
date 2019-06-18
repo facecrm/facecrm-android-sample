@@ -47,6 +47,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
+        <activity
+            android:name="com.facecrm.sample.view.SettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeActionBar"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
     </application>
 
 </manifest>

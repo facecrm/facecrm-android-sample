@@ -18,6 +18,9 @@ import com.face.detect.Listener.DetectFaceListener;
 import com.face.detect.Listener.FoundFaceListener;
 import com.facecrm.sample.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -29,7 +32,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     @BindView(R.id.tv_id)
     AppCompatTextView tvName;
     @BindView(R.id.tv_name)
-    AppCompatTextView tvEmail;
+    AppCompatTextView tvData;
     @BindView(R.id.tv_db)
     AppCompatTextView tvPhone;
     @BindView(R.id.tv_collection)
@@ -38,6 +41,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     ImageView imvFull;
     @BindView(R.id.imv_face)
     ImageView imvFace;
+    @BindView(R.id.btn_setting)
+    AppCompatButton btnSetting;
 
     @SuppressLint("HardwareIds")
     @Override
@@ -61,6 +66,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         FaceCRMSDK.getsInstance().onFoundFace(new FoundFaceListener() {
             @Override
             public void onFoundFace(final Bitmap face, final Bitmap fullImage) {
+            }
+        });
+
+        FaceCRMSDK.getsInstance().onDetectFace(new DetectFaceListener() {
+            @Override
+            public void onDetectFaceSuccess(final Bitmap face, final Bitmap fullImage, final String data) {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -69,22 +80,48 @@ public class MainActivity extends Activity implements View.OnClickListener {
                             public void run() {
                                 Glide.with(MainActivity.this).load(fullImage).into(imvFull);
                                 Glide.with(MainActivity.this).load(face).into(imvFace);
+                                try {
+                                    JSONObject obData = new JSONObject(data);
+                                    tvName.setText(obData.getString("face_id"));
+                                    tvData.setText("");
+                                    if (obData.has("emotion")) {
+                                        String emotion = obData.getString("emotion");
+                                        tvData.setText("Emotion: " + emotion);
+                                    }
+                                    String age = obData.getString("age");
+                                    if (Integer.parseInt(age) > 0)
+                                        tvData.setText(tvData.getText().toString() + " - Age: " + age);
+
+                                    if (obData.has("gender")) {
+                                        String gender = obData.getString("gender");
+                                        tvData.setText(tvData.getText().toString() + " - Gender: " + gender);
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         });
                     }
                 }).start();
             }
-        });
-
-        FaceCRMSDK.getsInstance().onDetectFace(new DetectFaceListener() {
-            @Override
-            public void onDetectFaceSuccess(Bitmap face, Bitmap fullImage, String faceId, String metaData) {
-                tvName.setText(faceId);
-            }
 
             @Override
-            public void onDetectFaceFail(Bitmap face, Bitmap fullImage, int code, String message) {
-                tvName.setText("Error code = " + code + ", " + message);
+            public void onDetectFaceFail(final Bitmap face, final Bitmap fullImage, final int errorCode, final String errorMessage) {
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        MainActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Glide.with(MainActivity.this).load(fullImage).into(imvFull);
+                                Glide.with(MainActivity.this).load(face).into(imvFace);
+                                tvName.setText("errorCode = " + errorCode + ", " + errorMessage);
+                                tvData.setText("");
+                            }
+                        });
+                    }
+                }).start();
             }
         });
 
@@ -105,6 +142,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private void initOnClick() {
         btnNew.setOnClickListener(this);
         btnHistory.setOnClickListener(this);
+        btnSetting.setOnClickListener(this);
     }
 
     @Override
@@ -114,6 +152,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
             startActivity(intent);
         } else if (v.getId() == R.id.btn_history) {
             startActivity(new Intent(MainActivity.this, HistoryActivity.class));
+        } else if (v.getId() == R.id.btn_setting) {
+            startActivity(new Intent(MainActivity.this, SettingActivity.class));
         }
     }
 }

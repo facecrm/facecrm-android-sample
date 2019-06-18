@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txt_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="100dp"
+        android:text="Detection rate"
+        android:textSize="@dimen/text_size_14"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/tv_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="85dp"
+        android:background="@drawable/custom_shape_transparent"
+        android:gravity="center_horizontal"
+        android:hint="70 to 100"
+        android:inputType="number"
+        android:minWidth="100dp"
+        android:padding="@dimen/margin_10"
+        android:singleLine="true"
+        android:textColor="@color/orange"
+        android:textSize="@dimen/text_size_16"
+        app:layout_constraintStart_toEndOf="@+id/txt_name"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txt_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="56dp"
+        android:text="Brightness"
+        android:textSize="@dimen/text_size_14"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_name" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/tv_bright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/custom_shape_transparent"
+        android:gravity="center_horizontal"
+        android:hint="-100 to 100"
+        android:inputType="numberSigned"
+        android:minWidth="100dp"
+        android:padding="@dimen/margin_10"
+        android:textColor="@color/orange"
+        android:textSize="@dimen/text_size_16"
+        app:layout_constraintStart_toEndOf="@+id/txt_email"
+        app:layout_constraintTop_toBottomOf="@+id/tv_rate" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txt_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="48dp"
+        android:text="Detection Type"
+        android:textSize="@dimen/text_size_14"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_email" />
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txt_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="40dp"
+        android:text="Show Face Result"
+        android:textSize="@dimen/text_size_14"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_phone" />
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/cb_emotion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="32dp"
+        android:text="emotion"
+        app:layout_constraintStart_toEndOf="@+id/txt_phone"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bright" />
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/cb_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="32dp"
+        android:text="age"
+        app:layout_constraintStart_toEndOf="@+id/cb_emotion"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bright" />
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/cb_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="32dp"
+        android:text="gender"
+        app:layout_constraintStart_toEndOf="@+id/cb_age"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bright" />
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/is_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toEndOf="@+id/txt_sex"
+        app:layout_constraintTop_toBottomOf="@+id/cb_emotion" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/custom_shape_orange"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
+        android:text="OK"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_reset"
+        app:layout_constraintTop_toBottomOf="@+id/is_show" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/custom_shape_orange"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
+        android:text="Reset"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/btn_setting"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/is_show" />
+
+</android.support.constraint.ConstraintLayout>
