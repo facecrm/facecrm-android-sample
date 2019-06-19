@@ -18,6 +18,7 @@ import com.face.detect.FaceCRMSDK;
 import com.face.detect.Listener.CaptureFaceListener;
 import com.face.detect.Listener.RegisterFaceListener;
 import com.face.detect.Listener.UploadFaceListener;
+import com.face.detect.Util.OptionFaceCRM;
 import com.facecrm.sample.R;
 
 import java.util.ArrayList;
@@ -200,6 +201,7 @@ public class CreateFaceActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void registerFace() {
-        FaceCRMSDK.getsInstance().registerOneByOneFace(lstFace, edtName.getText().toString());
+        OptionFaceCRM.mInstance().setRegisterMetaData(edtName.getText().toString());
+        FaceCRMSDK.getsInstance().registerFaces(lstFace);
     }
 }
