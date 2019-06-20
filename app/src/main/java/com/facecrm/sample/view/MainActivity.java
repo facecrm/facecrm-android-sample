@@ -43,6 +43,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
     ImageView imvFace;
     @BindView(R.id.btn_setting)
     AppCompatButton btnSetting;
+    @BindView(R.id.imv_switch)
+    ImageView imvSwitch;
 
     @SuppressLint("HardwareIds")
     @Override
@@ -143,6 +145,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         btnNew.setOnClickListener(this);
         btnHistory.setOnClickListener(this);
         btnSetting.setOnClickListener(this);
+        imvSwitch.setOnClickListener(this);
     }
 
     @Override
@@ -154,6 +157,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
             startActivity(new Intent(MainActivity.this, HistoryActivity.class));
         } else if (v.getId() == R.id.btn_setting) {
             startActivity(new Intent(MainActivity.this, SettingActivity.class));
+        } else if (v.getId() == R.id.imv_switch) {
+            FaceCRMSDK.getsInstance().switchCameraPosition();
         }
     }
 }

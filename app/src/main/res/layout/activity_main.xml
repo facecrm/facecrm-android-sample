@@ -8,13 +8,28 @@
     android:orientation="vertical"
     tools:context=".view.MainActivity">
 
-    <com.face.detect.CameraCustom
-        android:id="@+id/color_blob_detection_activity_surface_view"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/imv_full"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.face.detect.CameraCustom
+            android:id="@+id/color_blob_detection_activity_surface_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/imv_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:adjustViewBounds="true"
+            android:padding="16dp"
+            android:src="@drawable/ic_switch_camera" />
+    </RelativeLayout>
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_history"

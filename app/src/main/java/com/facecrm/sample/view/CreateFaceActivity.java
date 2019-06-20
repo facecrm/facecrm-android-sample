@@ -110,7 +110,7 @@ public class CreateFaceActivity extends AppCompatActivity implements View.OnClic
             }
 
             @Override
-            public void onRegisterFaceFail(int i, String s) {
+            public void onRegisterFaceFail(int code, String s) {
                 Toast.makeText(CreateFaceActivity.this, s, Toast.LENGTH_SHORT).show();
                 dismissDialog();
             }
