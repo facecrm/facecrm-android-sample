@@ -8,8 +8,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class Utils {
-    public static String appId = "71726c5c-3178-49f4-98dd-f01a356a91fc";
-    public static String secretCode = "a0ae0431b760594a1bd157f98b787901b240ef1acd7ef133";
+    public static String appId = "146e1fe7-3c17-460d-81a3-b5441eb5dc70";
     public static String PREF = "pref";
     public static String ID = "id";
     public static String TOKEN = "token";

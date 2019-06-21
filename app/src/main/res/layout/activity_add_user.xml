@@ -151,7 +151,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="30dp"
-            android:text="Meta data"
+            android:text="Full name"
             android:textColor="@color/purple"
             android:textSize="@dimen/text_size_16"
             android:visibility="visible"
@@ -165,12 +165,13 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/custom_shape_edittext"
-            android:minWidth="250dp"
+            android:minWidth="200dp"
             android:padding="@dimen/margin_10"
+            android:singleLine="true"
             android:textSize="@dimen/text_size_16"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintHorizontal_bias="0.376"
             app:layout_constraintStart_toEndOf="@+id/tv_name"
             app:layout_constraintTop_toBottomOf="@+id/relativeLayout3" />
 
@@ -183,7 +184,7 @@
             android:text="Phone number"
             android:textColor="@color/purple"
             android:textSize="@dimen/text_size_16"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
@@ -197,12 +198,73 @@
             android:inputType="phone"
             android:minWidth="200dp"
             android:padding="@dimen/margin_10"
+            android:singleLine="true"
             android:textSize="@dimen/text_size_16"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintStart_toEndOf="@+id/tv_phone"
             app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+        <TextView
+            android:id="@+id/tv_idc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="30dp"
+            android:text="Identity card"
+            android:textColor="@color/purple"
+            android:textSize="@dimen/text_size_16"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_phone" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edt_idc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/custom_shape_edittext"
+            android:minWidth="200dp"
+            android:padding="@dimen/margin_10"
+            android:singleLine="true"
+            android:textSize="@dimen/text_size_16"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.247"
+            app:layout_constraintStart_toEndOf="@+id/tv_idc"
+            app:layout_constraintTop_toBottomOf="@+id/edt_phone" />
+
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="30dp"
+            android:text="Email"
+            android:textColor="@color/purple"
+            android:textSize="@dimen/text_size_16"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edt_idc" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edt_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/custom_shape_edittext"
+            android:minWidth="200dp"
+            android:padding="@dimen/margin_10"
+            android:singleLine="true"
+            android:textSize="@dimen/text_size_16"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.386"
+            app:layout_constraintStart_toEndOf="@+id/tv_email"
+            app:layout_constraintTop_toBottomOf="@+id/edt_idc" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_next"
@@ -217,7 +279,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_phone" />
+            app:layout_constraintTop_toBottomOf="@+id/edt_email" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

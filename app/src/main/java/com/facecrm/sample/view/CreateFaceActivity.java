@@ -21,6 +21,10 @@ import com.face.detect.Listener.UploadFaceListener;
 import com.face.detect.Util.OptionFaceCRM;
 import com.facecrm.sample.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,12 +55,16 @@ public class CreateFaceActivity extends AppCompatActivity implements View.OnClic
     ImageView imvDelete3;
     @BindView(R.id.imv_close_4)
     ImageView imvDelete4;
+    @BindView(R.id.imv_add)
+    ImageView imvAdd;
     @BindView(R.id.edt_name)
     AppCompatEditText edtName;
     @BindView(R.id.edt_phone)
     AppCompatEditText edtPhone;
-    @BindView(R.id.imv_add)
-    ImageView imvAdd;
+    @BindView(R.id.edt_email)
+    AppCompatEditText edtEmail;
+    @BindView(R.id.edt_idc)
+    AppCompatEditText edtIDC;
 
     private Bitmap mBitmap;
     private int numberFace = 0;
@@ -201,7 +209,16 @@ public class CreateFaceActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void registerFace() {
-        OptionFaceCRM.mInstance().setRegisterMetaData(edtName.getText().toString());
-        FaceCRMSDK.getsInstance().registerFaces(lstFace);
+        try {
+            JSONObject metaData = new JSONObject();
+            metaData.put("full_name", edtName.getText().toString());
+            metaData.put("phone_number", edtPhone.getText().toString());
+            metaData.put("email", edtEmail.getText().toString());
+            metaData.put("identity_card", edtIDC.getText().toString());
+            FaceCRMSDK.getsInstance().setMetaData(metaData.toString());
+            FaceCRMSDK.getsInstance().registerFaces(lstFace);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

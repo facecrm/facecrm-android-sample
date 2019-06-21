@@ -194,4 +194,19 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_new"
         app:layout_constraintStart_toEndOf="@+id/btn_history" />
 
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_clear"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/custom_shape_white_radius"
+        android:paddingStart="@dimen/margin_10"
+        android:paddingEnd="@dimen/margin_10"
+        android:text="Clear Data"
+        android:textColor="@color/purple"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/tv_text_id"
+        app:layout_constraintStart_toEndOf="@+id/imv_face" />
+
 </android.support.constraint.ConstraintLayout>
