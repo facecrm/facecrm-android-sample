@@ -9,9 +9,6 @@ import java.util.TimeZone;
 
 public class Utils {
     public static String appId = "146e1fe7-3c17-460d-81a3-b5441eb5dc70";
-    public static String PREF = "pref";
-    public static String ID = "id";
-    public static String TOKEN = "token";
 
     public static String covertTime(String timestampUTC) {
         String FORMAT_UTC = "yyyy-MM-dd'T'hh:mm:ss.SSSSSS'Z'";
@@ -27,7 +24,6 @@ public class Utils {
             formatter2.setTimeZone(TimeZone.getTimeZone(getCurrentTimeZone()));
 
             formattedDate = formatter2.format(date);
-//            Log.e("date time", formattedDate);
         } catch (Exception e) {
             e.printStackTrace();
         }

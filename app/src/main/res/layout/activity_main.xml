@@ -15,7 +15,7 @@
         app:layout_constraintBottom_toTopOf="@+id/imv_full"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.face.detect.CameraCustom
+        <com.face.detect.CameraFaceDetect
             android:id="@+id/color_blob_detection_activity_surface_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

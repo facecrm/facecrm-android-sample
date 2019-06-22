@@ -19,12 +19,6 @@ public interface NetworkInterface {
                                          @Query("limit") int limit, @Query("offset") int offset);
 
     @FormUrlEncoded
-    @POST("members/create")
-    Observable<MemberResult> createMember(@Header("Authorization") String token,
-                                          @Field("fullname") String fullName, @Field("email") String email,
-                                          @Field("phone") String phone, @Field("sex") int sex);
-
-    @FormUrlEncoded
     @POST("application/token-auth")
     Call<MemberResult> applicationVerify(@Header("Authorization") String md5_appId, @Field("device_id") String deviceId);
 }

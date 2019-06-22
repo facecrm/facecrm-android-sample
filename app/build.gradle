@@ -45,7 +45,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2+'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 
-    implementation 'com.facecrm:facecrm-sdk:0.8.2'
+    implementation 'com.facecrm:facecrm-sdk:0.8.3'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

@@ -47,7 +47,7 @@ public class CreateFace2Activity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setContentView(R.layout.actvity_create_face);
+        setContentView(R.layout.actvity_create_face_2);
         ButterKnife.bind(this);
 
         onClick();

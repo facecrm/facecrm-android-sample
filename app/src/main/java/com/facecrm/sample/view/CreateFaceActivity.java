@@ -18,10 +18,8 @@ import com.face.detect.FaceCRMSDK;
 import com.face.detect.Listener.CaptureFaceListener;
 import com.face.detect.Listener.RegisterFaceListener;
 import com.face.detect.Listener.UploadFaceListener;
-import com.face.detect.Util.OptionFaceCRM;
 import com.facecrm.sample.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -65,6 +63,16 @@ public class CreateFaceActivity extends AppCompatActivity implements View.OnClic
     AppCompatEditText edtEmail;
     @BindView(R.id.edt_idc)
     AppCompatEditText edtIDC;
+    @BindView(R.id.edt_user_name)
+    AppCompatEditText edtUsername;
+    @BindView(R.id.edt_user_id)
+    AppCompatEditText edtUserId;
+    @BindView(R.id.edt_address)
+    AppCompatEditText edtAddress;
+    @BindView(R.id.edt_birthday)
+    AppCompatEditText edtBirthday;
+    @BindView(R.id.edt_sex)
+    AppCompatEditText edtSex;
 
     private Bitmap mBitmap;
     private int numberFace = 0;
@@ -75,7 +83,7 @@ public class CreateFaceActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setContentView(R.layout.activity_add_user);
+        setContentView(R.layout.activity_create_face);
         ButterKnife.bind(this);
 
         onClick();
@@ -211,11 +219,27 @@ public class CreateFaceActivity extends AppCompatActivity implements View.OnClic
     private void registerFace() {
         try {
             JSONObject metaData = new JSONObject();
-            metaData.put("full_name", edtName.getText().toString());
-            metaData.put("phone_number", edtPhone.getText().toString());
-            metaData.put("email", edtEmail.getText().toString());
-            metaData.put("identity_card", edtIDC.getText().toString());
-            FaceCRMSDK.getsInstance().setMetaData(metaData.toString());
+            if (edtName.getText().toString().length() > 0)
+                metaData.put("full_name", edtName.getText().toString());
+            if (edtPhone.getText().toString().length() > 0)
+                metaData.put("phone_number", edtPhone.getText().toString());
+            if (edtEmail.getText().toString().length() > 0)
+                metaData.put("email", edtEmail.getText().toString());
+            if (edtIDC.getText().toString().length() > 0)
+                metaData.put("identity_card", edtIDC.getText().toString());
+            if (edtUsername.getText().toString().length() > 0)
+                metaData.put("user_name", edtUsername.getText().toString());
+            if (edtUserId.getText().toString().length() > 0)
+                metaData.put("user_id", edtUserId.getText().toString());
+            if (edtAddress.getText().toString().length() > 0)
+                metaData.put("address", edtAddress.getText().toString());
+            if (edtBirthday.getText().toString().length() > 0)
+                metaData.put("birthday", edtBirthday.getText().toString());
+            if (edtSex.getText().toString().length() > 0)
+                metaData.put("sex", edtSex.getText().toString());
+
+            if (metaData.toString().length() > 2)
+                FaceCRMSDK.getsInstance().setMetaData(metaData.toString());
             FaceCRMSDK.getsInstance().registerFaces(lstFace);
         } catch (JSONException e) {
             e.printStackTrace();

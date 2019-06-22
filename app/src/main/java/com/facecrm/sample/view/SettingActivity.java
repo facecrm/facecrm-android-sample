@@ -1,5 +1,6 @@
 package com.facecrm.sample.view;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -51,6 +52,7 @@ public class SettingActivity extends AppCompatActivity {
         initControl();
     }
 
+    @SuppressLint("SetTextI18n")
     private void initData() {
         tvRate.setText(OptionFaceCRM.mInstance().getRate() + "");
         tvBright.setText(OptionFaceCRM.mInstance().getBrightness() + "");

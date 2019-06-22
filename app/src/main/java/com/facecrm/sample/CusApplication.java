@@ -13,9 +13,5 @@ public class CusApplication extends Application {
     public void onCreate() {
         super.onCreate();
         FaceCRMSDK.newInstance(getApplicationContext(), Utils.appId);
-//        OptionFaceCRM.mInstance().setBrightness(-30);
-//        getToken();
-//        String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-//        Util.shared().setDeviceId(deviceId);
     }
 }

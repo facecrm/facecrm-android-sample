@@ -92,10 +92,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
                                         String emotion = obData.getString("emotion");
                                         tvData.setText("Emotion: " + emotion);
                                     }
-                                    String age = obData.getString("age");
-                                    if (Integer.parseInt(age) > 0)
+                                    if (obData.has("age")) {
+                                        String age = obData.getString("age");
                                         tvData.setText(tvData.getText().toString() + " - Age: " + age);
-
+                                    }
                                     if (obData.has("gender")) {
                                         String gender = obData.getString("gender");
                                         tvData.setText(tvData.getText().toString() + " - Gender: " + gender);
