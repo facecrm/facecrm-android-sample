@@ -16,7 +16,7 @@
             android:id="@+id/view_camera"
             android:layout_width="match_parent"
             android:layout_height="450dp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.face.detect.CameraFaceDetect
